@@ -7,10 +7,10 @@ import java.util.regex.Pattern;
 
 public class FinancialAssistant {
     private double balance = 0;
-    private ArrayList<Expense> expenses = new ArrayList<>();
-    private ArrayList<Income> incomes = new ArrayList<>();
-    private ArrayList<Reminder> reminders = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
+    private final ArrayList<Expense> expenses = new ArrayList<>();
+    private final ArrayList<Income> incomes = new ArrayList<>();
+    private final ArrayList<Reminder> reminders = new ArrayList<>();
+    private final Scanner scanner = new Scanner(System.in);
     private static final String DATE_REGEX = "\\d{4}-\\d{2}-\\d{2}";
 
     public double getBalance() {
@@ -95,17 +95,22 @@ public class FinancialAssistant {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 1:
+                case 1 -> {
                     String dateExpense = inputValidDate();
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter expense amount: ");
                     double expenseAmount = scanner.nextDouble();
+                    if (this.getBalance()>=expenseAmount) {
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter expense category: ");
                     String expenseCategory = scanner.nextLine();
                     recordExpense(dateExpense, expenseAmount, expenseCategory);
-                    break;
-                case 2:
+                        this.setBalance((int) (this.getBalance()-expenseAmount));
+                        System.out.println("New balance: "+ this.getBalance());
+                    }
+                    else System.out.println("Not enough balance.");
+                }
+                case 2 -> {
                     String dateIncome = inputValidDate();
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter income amount: ");
@@ -113,33 +118,35 @@ public class FinancialAssistant {
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter income source: ");
                     String incomeSource = scanner.nextLine();
-                    recordIncome(dateIncome,incomeAmount, incomeSource);
-                    break;
-                case 3:
+                    recordIncome(dateIncome, incomeAmount, incomeSource);
+                    this.setBalance((int) (this.getBalance()+incomeAmount));
+                    System.out.println("New balance: "+ this.getBalance());
+                }
+                case 3 -> {
                     String reminderDate = inputValidDate();
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter reminder description: ");
                     String reminderDescription = scanner.nextLine();
                     addReminder(reminderDate, reminderDescription);
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     System.out.println("--- Expenses ---");
                     viewExpenses();
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     System.out.println("--- Incomes ---");
                     viewIncomes();
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     System.out.println("--- Reminders ---");
                     viewReminders();
-                    break;
-                case 7:
+                }
+                case 7 -> {
                     System.out.println("Thank you for using the Financial Assistant.");
                     scanner.close();
                     return;
-                default:
-                    System.out.println("Invalid choice. Please select a valid option.");
+                }
+                default -> System.out.println("Invalid choice. Please select a valid option.");
             }
         }
     }
