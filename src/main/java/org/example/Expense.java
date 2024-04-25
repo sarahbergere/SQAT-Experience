@@ -10,4 +10,16 @@ public class Expense {
         this.amount = amount;
         this.category = category;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getCategory() {
+        return category;
+    }
 }

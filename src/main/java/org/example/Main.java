@@ -2,6 +2,7 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-//        FinancialAssistant financialAssistant = new FinancialAssistant();
+        FinancialAssistant assistant = new FinancialAssistant();
+        assistant.displayMenu();
     }
 }

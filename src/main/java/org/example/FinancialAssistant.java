@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FinancialAssistant {
+
+    private double balance = 0;
     private final ArrayList<Expense> expenses = new ArrayList<>();
     private final ArrayList<Income> incomes = new ArrayList<>();
     private final ArrayList<Reminder> reminders = new ArrayList<>();
@@ -41,7 +43,7 @@ public class FinancialAssistant {
 
     public void displayMenu() {
         while (true) {
-            System.out.println("\nWhat would you like to do?");
+            System.out.println("Available balance: "+getBalance()+"\nWhat would you like to do?");
             System.out.println("1. Record an expense");
             System.out.println("2. Record an income");
             System.out.println("3. Add a reminder");
@@ -59,10 +61,15 @@ public class FinancialAssistant {
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter expense amount: ");
                     double expenseAmount = scanner.nextDouble();
+                    if (this.getBalance()>=expenseAmount) {
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter expense category: ");
                     String expenseCategory = scanner.nextLine();
                     recordExpense(dateExpense, expenseAmount, expenseCategory);
+                        this.setBalance((int) (this.getBalance()-expenseAmount));
+                        System.out.println("New balance: "+ this.getBalance());
+                    }
+                    else System.out.println("Not enough balance.");
                 }
                 case 2 -> {
                     System.out.println("Enter income date (YYYY-MM-DD): ");
@@ -74,6 +81,8 @@ public class FinancialAssistant {
                     System.out.println("Enter income source: ");
                     String incomeSource = scanner.nextLine();
                     recordIncome(dateIncome, incomeAmount, incomeSource);
+                    this.setBalance((int) (this.getBalance()+incomeAmount));
+                    System.out.println("New balance: "+ this.getBalance());
                 }
                 case 3 -> {
                     System.out.println("Enter reminder date (YYYY-MM-DD): ");
@@ -103,10 +112,5 @@ public class FinancialAssistant {
                 default -> System.out.println("Invalid choice. Please select a valid option.");
             }
         }
-    }
-
-    public static void main(String[] args) {
-        FinancialAssistant assistant = new FinancialAssistant();
-        assistant.displayMenu();
     }
 }
