@@ -10,5 +10,17 @@ public class Income {
         this.amount = amount;
         this.source = source;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getSource() {
+        return source;
+    }
 }
 

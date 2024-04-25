@@ -2,6 +2,8 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FinancialAssistant {
 
@@ -10,6 +12,29 @@ public class FinancialAssistant {
     private final ArrayList<Income> incomes = new ArrayList<>();
     private final ArrayList<Reminder> reminders = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
+    private static final String DATE_REGEX = "\\d{4}-\\d{2}-\\d{2}";
+
+    public double getBalance() {
+        return this.balance;
+    }
+
+    public void setBalance(int n){
+        this.balance = n;
+    }
+
+    public ArrayList<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public ArrayList<Income> getIncomes() {
+        return incomes;
+    }
+
+    public boolean isValidDate(String date) {
+        Pattern pattern = Pattern.compile(DATE_REGEX);
+        Matcher matcher = pattern.matcher(date);
+        return matcher.matches();
+    }
 
     public void recordExpense(String date, double amount, String category) {
         expenses.add(new Expense(date, amount, category));
@@ -41,6 +66,18 @@ public class FinancialAssistant {
         }
     }
 
+    private String inputValidDate() {
+        while (true) {
+            System.out.println("Enter date (YYYY-MM-DD): ");
+            String date = scanner.next();
+            if (isValidDate(date)) {
+                return date;
+            } else {
+                System.out.println("Invalid date format. Please use YYYY-MM-DD format.");
+            }
+        }
+    }
+
     public void displayMenu() {
         while (true) {
             System.out.println("Available balance: "+getBalance()+"\nWhat would you like to do?");
@@ -56,8 +93,7 @@ public class FinancialAssistant {
 
             switch (choice) {
                 case 1 -> {
-                    System.out.println("Enter expense date (YYYY-MM-DD): ");
-                    String dateExpense = scanner.next();
+                    String dateExpense = inputValidDate();
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter expense amount: ");
                     double expenseAmount = scanner.nextDouble();
@@ -72,8 +108,7 @@ public class FinancialAssistant {
                     else System.out.println("Not enough balance.");
                 }
                 case 2 -> {
-                    System.out.println("Enter income date (YYYY-MM-DD): ");
-                    String dateIncome = scanner.next();
+                    String dateIncome = inputValidDate();
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter income amount: ");
                     double incomeAmount = scanner.nextDouble();
@@ -85,8 +120,7 @@ public class FinancialAssistant {
                     System.out.println("New balance: "+ this.getBalance());
                 }
                 case 3 -> {
-                    System.out.println("Enter reminder date (YYYY-MM-DD): ");
-                    String reminderDate = scanner.next();
+                    String reminderDate = inputValidDate();
                     scanner.nextLine(); // Consume newline
                     System.out.println("Enter reminder description: ");
                     String reminderDescription = scanner.nextLine();
