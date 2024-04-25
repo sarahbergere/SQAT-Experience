@@ -13,7 +13,6 @@ public class FinancialAssistantTest {
     private FinancialAssistant assistant;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
-
     @BeforeEach
     public void setUp() {
         assistant = new FinancialAssistant();
