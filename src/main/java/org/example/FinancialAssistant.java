@@ -1,9 +1,9 @@
 package org.example;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class FinancialAssistant {
     private double balance = 0;
@@ -34,9 +34,19 @@ public class FinancialAssistant {
     }
 
     public boolean isValidDate(String date) {
-        Pattern pattern = Pattern.compile(DATE_REGEX);
-        Matcher matcher = pattern.matcher(date);
-        return matcher.matches();
+        if (!date.matches(DATE_REGEX)) {
+            return false;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+
+        try {
+            sdf.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 
     public void recordExpense(String date, double amount, String category) {
