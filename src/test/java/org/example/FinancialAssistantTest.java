@@ -104,29 +104,19 @@ public class FinancialAssistantTest {
 
     @Test
     public void testIsValidDate_ValidDate() {
-        FinancialAssistant financialAssistant = new FinancialAssistant();
-        assertTrue(financialAssistant.isValidDate("2024-04-25"));
+        assertTrue(assistant.isValidDate("2024-04-25"));
     }
 
     @Test
     public void testIsValidDate_InvalidDate() {
-        FinancialAssistant financialAssistant = new FinancialAssistant();
-        assertFalse(financialAssistant.isValidDate("2024-13-45"));
-        assertFalse(financialAssistant.isValidDate("2024/04/25"));
-        assertFalse(financialAssistant.isValidDate("abcd-ef-gh"));
+        assertFalse(assistant.isValidDate("2024-13-45"));
+        assertFalse(assistant.isValidDate("2024/04/25"));
+        assertFalse(assistant.isValidDate("abcd-ef-gh"));
     }
 
     @Test
-    public void testGetBalance() {
-        FinancialAssistant financialAssistant = new FinancialAssistant();
-        financialAssistant.setBalance(100);
-        assertEquals(100, financialAssistant.getBalance());
-    }
-
-    @Test
-    public void testSetBalance() {
-        FinancialAssistant financialAssistant = new FinancialAssistant();
-        financialAssistant.setBalance(200);
-        assertEquals(200, financialAssistant.getBalance());
+    public void testGetSetBalance() {
+        assistant.setBalance(100);
+        assertEquals(100, assistant.getBalance());
     }
 }
