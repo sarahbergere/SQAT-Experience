@@ -49,12 +49,24 @@ public class FinancialAssistant {
         }
     }
 
+    public boolean isValidAmount(double amount) {
+        return (amount > 0);
+    }
+
     public void recordExpense(String date, double amount, String category) {
-        expenses.add(new Expense(date, amount, category));
+        if (isValidAmount(amount)) {
+            expenses.add(new Expense(date, amount, category));
+        } else {
+            System.out.println("Enter a correct amount, only strictly positive values allowed");
+        }
     }
 
     public void recordIncome(String date, double amount, String source) {
-        incomes.add(new Income(date, amount, source));
+        if (isValidAmount(amount)) {
+            incomes.add(new Income(date, amount, source));
+        } else {
+            System.out.println("Enter a correct amount, only strictly positive values allowed");
+        }
     }
 
     public void addReminder(String date, String description) {
@@ -107,11 +119,11 @@ public class FinancialAssistant {
             switch (choice) {
                 case 1 -> {
                     String dateExpense = inputValidDate();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine(); 
                     System.out.println("Enter expense amount: ");
                     double expenseAmount = scanner.nextDouble();
                     if (this.getBalance()>=expenseAmount) {
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine(); 
                     System.out.println("Enter expense category: ");
                     String expenseCategory = scanner.nextLine();
                     recordExpense(dateExpense, expenseAmount, expenseCategory);
@@ -122,10 +134,10 @@ public class FinancialAssistant {
                 }
                 case 2 -> {
                     String dateIncome = inputValidDate();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine(); 
                     System.out.println("Enter income amount: ");
                     double incomeAmount = scanner.nextDouble();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine(); 
                     System.out.println("Enter income source: ");
                     String incomeSource = scanner.nextLine();
                     recordIncome(dateIncome, incomeAmount, incomeSource);
@@ -134,7 +146,7 @@ public class FinancialAssistant {
                 }
                 case 3 -> {
                     String reminderDate = inputValidDate();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine(); 
                     System.out.println("Enter reminder description: ");
                     String reminderDescription = scanner.nextLine();
                     addReminder(reminderDate, reminderDescription);
