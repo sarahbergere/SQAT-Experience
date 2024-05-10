@@ -57,7 +57,7 @@ public class FinancialAssistant {
         if (isValidAmount(amount)) {
             expenses.add(new Expense(date, amount, category));
         } else {
-            System.out.println("Enter a correct amount, only strictly positive values allowed");
+            System.out.println("Enter a correct amount , only strictly positive values allowed");
         }
     }
 
